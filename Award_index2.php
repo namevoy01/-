@@ -1,0 +1,214 @@
+<?php
+include 'config.php';
+
+$sql = "SELECT Award_ID, Award_NameTH, Award_Info, Award_Day, Award_Picture
+        FROM award 
+        ORDER BY Award_Day DESC";
+$result = $conn->query($sql);
+?>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>รางวัลที่ได้รับทั้งหมด</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kanit&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background-color: #f5f9fc;
+            color: #333;
+        }
+
+        /* --- Header --- */
+        .top-bar {
+            background: url('assets/image/bg_header.png') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 30px 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .logo img {
+            height: 140px;
+        }
+
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+
+        .header-title h1 {
+            font-size: 36px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.4);
+        }
+
+        .menu-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+        }
+
+        .menu-bar a {
+            padding: 14px 24px;
+            background-color: white;
+            color: #004488;
+            text-decoration: none;
+            font-size: 18px;
+            border-radius: 16px;
+            transition: background 0.3s;
+        }
+
+        .menu-bar a:hover {
+            background-color: #e6f2ff;
+        }
+
+    /* ปรับการจัดระยะห่างของปุ่ม Logout */
+        .logout {
+            display: flex;
+            align-items: center;
+            margin-left: auto;  /* ทำให้ปุ่ม logout อยู่ทางขวาสุด */
+            margin-top: 20px;  /* เพิ่มระยะห่างจากเมนูคำสั่ง */
+        }
+
+    /* ปรับขนาดรูปภาพในปุ่ม Logout */
+        .logout a img {
+            width: 20px;   /* กำหนดความกว้างของรูปภาพ */
+            height: 20px;  /* กำหนดความสูงของรูปภาพ */
+            margin-right: 10px; /* ระยะห่างระหว่างรูปและข้อความ */
+        }
+
+    /* ปรับการจัดระยะห่างของเมนูคำสั่ง */
+        .menu-bar {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 30px; /* เพิ่มระยะห่างจาก header */
+        }
+
+    /* หากต้องการเพิ่มระยะห่างระหว่างปุ่ม Logout กับเมนูคำสั่ง */
+        .logout a {
+            padding: 14px 24px;
+            background-color: #004488;
+            color: white;
+            text-decoration: none;
+            border-radius: 16px;
+            transition: background 0.3s;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            margin-left: 30px;  /* เพิ่มระยะห่างระหว่างปุ่ม logout และเมนู */
+        }
+
+        /* --- Scholarships Display --- */
+        h2 {
+            text-align: center;
+            color: #007acc;
+            margin: 40px 0 20px;
+            font-size: 32px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px 40px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 20px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.06);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 20px;
+            color: #005fa3;
+        }
+
+        .card p {
+            font-size: 14px;
+            margin: 8px 0;
+            color: #444;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007acc;
+            font-weight: bold;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="top-bar">
+        <div class="logo">
+            <img src="assets/image/logo.png" alt="โลโก้คณะ">
+        </div>
+        <div class="header-title">
+            <h1>Alumni ระบบจัดการข้อมูลศิษย์เก่า</h1>
+        </div>
+        <div class="menu-bar">
+            <a href="index2.php">ข่าวสาร</a>
+            <a href="scholarship_index2.php">ทุน</a>
+            <a href="Award_index2.php">รางวัล</a>
+            <a href="#">บุคลากร/เจ้าหน้าที่</a>
+            <a href="profile.php">โปรไฟล์</a>
+        </div>
+        <div class="logout">
+            <a href="logout.php"><img src="assets/image/emoji_profile.png" alt="Login">Logout</a>
+        </div>
+    </div>
+
+    <!-- Scholarships -->
+    <h2>รางวัลที่คณะศึกษาศาสตร์ได้รับทั้งหมด</h2>
+    <div class="grid">
+        <?php while($row = $result->fetch_assoc()): ?>
+            <div class="card">
+                <?php if ($row['Award_Picture']): ?>
+                    <img src="<?= htmlspecialchars($row['Award_Picture']) ?>" alt="ภาพวันที่รับรางวัล">
+                <?php endif; ?>
+                <h3><?= htmlspecialchars($row['Award_NameTH']) ?></h3>
+                <p><?= mb_substr(strip_tags($row['Award_Info']), 0, 100) ?>...</p>
+                <p>📅 <?= $row['Award_Day'] ?></p>
+                <a href="Award_view.php?Award_ID=<?= $row['Award_ID'] ?>">ดูรายละเอียด</a>
+            </div>
+        <?php endwhile; ?>
+    </div>
+</body>
+</html>
